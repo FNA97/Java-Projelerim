@@ -190,48 +190,48 @@ public class ShoppingCart implements IKampanyalar {
 		
 	}
 	
-	private enum Biletler {
+	private enum Biletler { // Biletleri private enum olarak tanımladık.Hiçbir şekilde fiyatları ve isimleri değişmeyecek.
 		Opera(300),
 		Sinema(30),
 		Bungee(100);
 		
-		private final int price;
+		private final int price; 
 		
-		Biletler(int price) {
+		Biletler(int price) {  // Biletlerin fiyatını belirlemek için int türünde bir Constructor tanımlıyoruz.
 			this.price = price;
 		}
 		
-		public int getPrice(){
+		public int getPrice(){ // Biletlerin fiyatlarını elde etmek için getPrice methodu
 			
-			return this.price;
+			return this.price;  // Bilet fiyatlarını döndürüyor.
 		}
 	}
 	
-	public void add() {
+	public void add() { // Satın alınan biletleri belirleyen add methodu
 		System.out.println("Kaç adet Opera bileti satın almak istiyorsunuz?");
 		@SuppressWarnings("resource")
 		Scanner opSay = new Scanner(System.in);
-		OperaSayac = opSay.nextInt();
-		int operaFiyat = Biletler.Opera.getPrice();
-		arrList.add((OperaSayac)*(operaFiyat));
+		OperaSayac = opSay.nextInt();    // Opera bilet sayısı
+		int operaFiyat = Biletler.Opera.getPrice(); // Fiyatını elde edip
+		arrList.add((OperaSayac)*(operaFiyat));  // Listeye ekledik.
 		System.out.println("Kaç adet Sinema bileti satın almak istiyorsunuz?");
 		@SuppressWarnings("resource")
 		Scanner sinSay = new Scanner(System.in);
-		SinemaSayac = sinSay.nextInt();
-		int sinemaFiyat = Biletler.Sinema.getPrice();
-		arrList.add((SinemaSayac)*(sinemaFiyat));
+		SinemaSayac = sinSay.nextInt();	   // Sinema bilet sayısı
+		int sinemaFiyat = Biletler.Sinema.getPrice(); // Fiyatını elde edip
+		arrList.add((SinemaSayac)*(sinemaFiyat));  // Listeye ekledik.
 		System.out.println("Kaç adet Bungee bileti satın almak istiyorsunuz?");
 		@SuppressWarnings("resource")
 		Scanner bunSay = new Scanner(System.in);
-		BungeeSayac = bunSay.nextInt();
-		int bungeeFiyat = Biletler.Bungee.getPrice();
-		arrList.add((BungeeSayac)*(bungeeFiyat));
+		BungeeSayac = bunSay.nextInt();  // Bungee Jumping bilet sayısı
+		int bungeeFiyat = Biletler.Bungee.getPrice(); // Fiyatını elde edip
+		arrList.add((BungeeSayac)*(bungeeFiyat));  // Listeye ekledik.
 	}
 	
-	public void total(){
-		val1 = arrList.get(0);
-		val2 = arrList.get(1);
-		val3 = arrList.get(2);
+	public void total(){ // Toplam ödenmesi gereken fiyatı belirleyen total methodumuz
+		val1 = arrList.get(0);  // Listenin 0. Elemanı Opera biletlerinin toplamı
+		val2 = arrList.get(1);  // Listenin 1. Elemanı Sinema biletlerinin toplamı
+		val3 = arrList.get(2);  // Listenin 2. Elemanı Bungee Jumping biletlerinin toplamı
 		totalPrice = (val1+val2+val3);	
 	}
 	
@@ -242,8 +242,8 @@ public static void main(String []args) {
 	Scanner islemNo1 = new Scanner(System.in);
 	int islemNo = islemNo1.nextInt();
 	
-	switch(islemNo){
-	case 101:
+	switch(islemNo){  // Menu de yapılacak switch işlemi
+	case 101:  //101 girilirse
 		biletlerim.add();
 		biletlerim.total();
 		biletlerim.mevcut1();
@@ -251,7 +251,7 @@ public static void main(String []args) {
 		biletlerim.mevcut3();
 		break;
 		
-	case 202:
+	case 202: //202 girilirse
 		biletlerim.add();
 		biletlerim.total();
 		biletlerim.kampanyaEkle1(0, 0, 0, 0);
@@ -259,7 +259,7 @@ public static void main(String []args) {
 		biletlerim.kampanyaEkle3(0, 0, 0, 0, 0);
 		break;
 		
-	default:
+	default: // Hatalı giriş yapılırsa
 		System.out.println("Eksik veya hatalı bir giriş yaptınız.");
 		break;
 	}
