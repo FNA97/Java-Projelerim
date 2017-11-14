@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner; 
 
-// ShoppingCart'ımız.. IMevcutKampanyalar ve IEklenenKampanyalar interfacelerin özellik,methodlarını taşıyor.
+// ShoppingCart'ımız.. IMevcutKampanyalar ve IEklenenKampanyalar interfacelerinin özellik,methodlarını taşıyor.
 
 public class ShoppingCart implements IMevcutKampanyalar,IEklenenKampanyalar {
 	
