@@ -23,6 +23,7 @@ public class ShoppingCart implements IMevcutKampanyalar,IEklenenKampanyalar {
 	public int XE2;
 	public int XE3;
 	public int XE4;
+	public int XE5;
 	
 	// Liste oluşturma
 	
