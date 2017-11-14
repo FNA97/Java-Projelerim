@@ -241,10 +241,10 @@ public static void main(String []args) {
 	System.out.println("Lütfen mevcut kampanyalarla satın alma işlemi için 101,"+System.lineSeparator()+"Yeni kampanyalarla satın alma işlemi için 202 yi tuşlayınız."+System.lineSeparator()+"Giriş kodu : ");
 	@SuppressWarnings("resource")
 	Scanner islemNo1 = new Scanner(System.in);
-	int islemNo = islemNo1.nextInt();
+	String islemNo = islemNo1.nextLine();
 	
 	switch(islemNo){  // Menu de yapılacak switch işlemi
-	case 101:  //101 girilirse
+	case "101":  //101 girilirse
 		biletlerim.add();
 		biletlerim.total();
 		biletlerim.mevcut1();
@@ -252,7 +252,7 @@ public static void main(String []args) {
 		biletlerim.mevcut3();
 		break;
 		
-	case 202: //202 girilirse
+	case "202": //202 girilirse
 		biletlerim.add();
 		biletlerim.total();
 		biletlerim.kampanyaEkle1(0, 0, 0, 0);
