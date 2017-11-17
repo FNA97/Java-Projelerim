@@ -19,11 +19,12 @@ public class ShoppingCart implements IMevcutKampanyalar,IEklenenKampanyalar {
 	public int val1;
 	public int val2;
 	public int val3;
-	public int XE1;
-	public int XE2;
-	public int XE3;
-	public int XE4;
-	public int XE5;
+	public int tur1Adet;
+	public int tur2Adet;
+	public int biletTuru1;
+	public int biletTuru2;
+	public int indirimTutari;
+	public int kampanyaSayac=0;
 	
 	// Liste oluşturma
 	
@@ -63,132 +64,135 @@ public class ShoppingCart implements IMevcutKampanyalar,IEklenenKampanyalar {
 		System.out.println("Alınan biletlerin toplam fiyatı : "+totalPrice+"$ olarak belirlendi.");
 	}
 	
-	/*
-	 * 
-	 *  XE1 = 1. Bilet türü adeti
-	 *  XE2 = 2. Bilet türü adeti(İndirim uygulanan)
-	 *  XE3 = 1. Bilet türü  (Oluşturulan ArrayListe göre 0 Opera 1 Sinema 2 BungeeJumping)
-	 *  XE4 = 2. Bilet türü  (Oluşturulan ArrayListe göre 0 Opera 1 Sinema 2 BungeeJumping)
-	 *  XE5 = İndirim tutarı
-	 *  
-	*/
-	
-	
 	// Eklenen Kampanyalar(İnterface)
-	
-	public void kampanyaEkle1(int XE1, int XE2, int XE3 , int XE4) { 
-		if (XE3==0 & XE4==0 & XE1!=0 & XE2!=0){
-			if(OperaSayac!=0){
-				totalPrice-=(XE2*Biletler.Opera.getPrice());
-				System.out.println("Opera biletinde "+XE1+" al "+(XE2-1)+" öde kampanyası uygulandı."); // X tane al Y tane öde(Eklenen kampanya türü 1 - Opera)
+
+	public void kampanyaEkle1(int tur1Adet,int tur2Adet,int biletTuru1) { 
+		if(tur1Adet!=0 || tur2Adet!=0 || biletTuru1!=0) {
+			if(OperaSayac!=0 & biletTuru1==0){
+				for(int i = 1;i<=OperaSayac;i++){
+					if (i%tur1Adet==0){
+						totalPrice-=(tur2Adet*Biletler.Opera.getPrice());
+						kampanyaSayac+=1;
+						}
+					}
+				System.out.println("Opera biletinde "+tur1Adet*kampanyaSayac+" al "+tur2Adet*kampanyaSayac+" öde kampanyası uygulandı.");
 				System.out.println("Yeni kampanyalı fiyat : "+totalPrice+"$");
-			}	
-		}
-		else if (XE3==1 & XE4==1 & XE1!=0 & XE2!=0){
-			if(SinemaSayac!=0){
-				totalPrice-=(XE2*Biletler.Sinema.getPrice());
-				System.out.println("Sinema biletinde "+XE1+" al "+(XE2-1)+" öde kampanyası uygulandı."); // X tane al Y tane öde(Eklenen kampanya türü 1 - Sinema)
+				}
+			else if(SinemaSayac!=0 & biletTuru1==1){
+				for(int i = 1;i<=SinemaSayac;i++){
+					if (i%tur1Adet==0){
+						totalPrice-=(tur2Adet*Biletler.Sinema.getPrice());
+						kampanyaSayac+=1;
+						}
+					}
+				System.out.println("Sinema biletinde "+tur1Adet*kampanyaSayac+" al "+tur2Adet*kampanyaSayac+" öde kampanyası uygulandı.");
 				System.out.println("Yeni kampanyalı fiyat : "+totalPrice+"$");
-			}	
-		}
-		else if (XE3==2 & XE4==2 & XE1!=0 & XE2!=0){
-			if(BungeeSayac!=0){
-				totalPrice-=(XE2*Biletler.Bungee.getPrice());
-				System.out.println("Bungee biletinde "+XE1+" al "+(XE2-1)+" öde kampanyası uygulandı."); // X tane al Y tane öde(Eklenen kampanya türü 1 - Bungee Jumping)
+				}
+			if(BungeeSayac!=0 & biletTuru1==2){
+				for(int i = 1;i<=BungeeSayac;i++){
+					if (i%tur1Adet==0){
+						totalPrice-=(tur2Adet*Biletler.Bungee.getPrice());
+						kampanyaSayac+=1;
+						}
+					}
+				System.out.println("Bungee Jumping biletinde "+tur1Adet*kampanyaSayac+" al "+tur2Adet*kampanyaSayac+" öde kampanyası uygulandı.");
 				System.out.println("Yeni kampanyalı fiyat : "+totalPrice+"$");
-			}	
-		}else{
-			System.out.println("Eklenen kampanya bulunamadı.(1)"); // Eklenmemiş ise console çıktısı
+				}	
 		}
-		
+		else {
+			System.out.println("Eklenen kampanya bulunamadı.(1)");
+			}
 	}
 	
-	public void kampanyaEkle2(int XE1,int XE2, int XE3 , int XE4) {
-		if(XE3==0 & XE4==1 & XE1!=0 & XE2!=0 & SinemaSayac!=0 & OperaSayac!=0 || XE3==1 & XE4==0  & XE1!=0 & XE2!=0 & SinemaSayac!=0 & OperaSayac!=0 ){
-			if(XE1>=XE2){
-				totalPrice-=(XE2*Biletler.Sinema.getPrice());
-				System.out.println(XE2+" Adet Opera bileti alana "+XE2+" adet Sinema bileti bedava kampanyası uygulandı."); // X al X tane bedava (Opera->Sinema)
-				System.out.println("Yeni kampanyalı fiyat : "+totalPrice+"$");
-			}
-			if(XE2>=XE1){
-				totalPrice-=(XE1*Biletler.Opera.getPrice());
-				System.out.println(XE1+" Adet Sinema bileti alana "+XE1+" adet Opera bileti bedava kampanyası uygulandı."); // X al X tane bedava (Sinema->Opera)
+	public void kampanyaEkle2(int tur1Adet, int tur2Adet, int biletTuru1, int biletTuru2) {
+		if (biletTuru1==0 & biletTuru2==1) {
+			if (SinemaSayac!=0 & OperaSayac!=0){
+				totalPrice=totalPrice-(tur2Adet*Biletler.Sinema.getPrice());
+				System.out.println(tur1Adet+" adet Opera bileti alana "+tur2Adet+" tane Sinema bileti bedava kampanyası uygulandı.");
 				System.out.println("Yeni kampanyalı fiyat : "+totalPrice+"$");
 			}
 		}
-		else if(XE3==1 & XE4==2 & XE1!=0 & XE2!=0 & BungeeSayac!=0 & SinemaSayac!=0 || XE3==2 & XE4==1  & XE1!=0 & XE2!=0 & BungeeSayac!=0 & SinemaSayac!=0 ){
-			if(XE1>=XE2){
-				totalPrice-=(XE2*Biletler.Bungee.getPrice());
-				System.out.println(XE2+" Adet Sinema bileti alana "+XE2+" adet Bungee bileti bedava kampanyası uygulandı."); // X al X tane bedava (Sinema->Bungee)
-				System.out.println("Yeni kampanyalı fiyat : "+totalPrice+"$");
-			}
-			if(XE2>=XE1){
-				totalPrice-=(XE1*Biletler.Sinema.getPrice());
-				System.out.println(XE1+" Adet Bungee bileti alana "+XE1+" adet Sinema bileti bedava kampanyası uygulandı."); // X al X tane bedava (Bungee->Sinema)
+		else if (biletTuru1==1 & biletTuru2==0) {
+			if (SinemaSayac!=0 & OperaSayac!=0){
+				totalPrice=totalPrice-(tur2Adet*Biletler.Opera.getPrice());
+				System.out.println(tur1Adet+" adet Sinema bileti alana "+tur2Adet+" tane Opera bileti bedava kampanyası uygulandı.");
 				System.out.println("Yeni kampanyalı fiyat : "+totalPrice+"$");
 			}
 		}
-		else if(XE3==0 & XE4==2 & XE1!=0 & XE2!=0 & BungeeSayac!=0 & OperaSayac!=0 || XE3==2 & XE4==0  & XE1!=0 & XE2!=0 & XE2!=0 & BungeeSayac!=0 & OperaSayac!=0){
-			if(XE1>=XE2){
-				totalPrice-=(XE2*Biletler.Bungee.getPrice());
-				System.out.println(XE2+" Adet Opera bileti alana "+XE2+" adet Bungee bileti bedava kampanyası uygulandı."); // X al X tane bedava (Opera->Bungee)
-				System.out.println("Yeni kampanyalı fiyat : "+totalPrice+"$");
-			}
-			if(XE2<=XE1){
-				totalPrice-=(XE1*Biletler.Opera.getPrice());
-				System.out.println(XE1+" Adet Bungee bileti alana "+XE1+" adet Opera bileti bedava kampanyası uygulandı."); // X al X tane bedava (Bungee->Opera)
+		else if (biletTuru1==1 & biletTuru2==2) {
+			if (SinemaSayac!=0 & BungeeSayac!=0){
+				totalPrice=totalPrice-(tur2Adet*Biletler.Bungee.getPrice());
+				System.out.println(tur1Adet+" adet Sinema bileti alana "+tur2Adet+" tane Bungee Jumping bileti bedava kampanyası uygulandı.");
 				System.out.println("Yeni kampanyalı fiyat : "+totalPrice+"$");
 			}
 		}
-		else{
-			System.out.println("Eklenen kampanya bulunamadı.(2)"); // Eklenmemiş ise console çıktısı
+		else if (biletTuru1==2 & biletTuru2==1) {
+			if (SinemaSayac!=0 & BungeeSayac!=0){
+				totalPrice=totalPrice-(tur2Adet*Biletler.Sinema.getPrice());
+				System.out.println(tur1Adet+" adet Bungee Jumping bileti alana "+tur2Adet+" tane Sinema bileti bedava kampanyası uygulandı.");
+				System.out.println("Yeni kampanyalı fiyat : "+totalPrice+"$");
+			}
 		}
-		
-		
+		else if (biletTuru1==0 & biletTuru2==2) {
+			if (BungeeSayac!=0 & OperaSayac!=0){
+				totalPrice=totalPrice-(tur2Adet*Biletler.Bungee.getPrice());
+				System.out.println(tur1Adet+" adet Opera bileti alana "+tur2Adet+" tane Bungee Jumping bileti bedava kampanyası uygulandı.");
+				System.out.println("Yeni kampanyalı fiyat : "+totalPrice+"$");
+			}
+		}
+		else if (biletTuru1==2 & biletTuru2==0) {
+			if (BungeeSayac!=0 & OperaSayac!=0){
+				totalPrice=totalPrice-(tur2Adet*Biletler.Opera.getPrice());
+				System.out.println(tur1Adet+" adet Bungee Jumping bileti alana "+tur2Adet+" tane Opera bileti bedava kampanyası uygulandı.");
+				System.out.println("Yeni kampanyalı fiyat : "+totalPrice+"$");
+			}
+		}
+		else {
+			System.out.println("Eklenen kampanya bulunamadı.(2)");
+		}
 	}
 	
-	public void kampanyaEkle3(int XE1, int XE2, int XE3 , int XE4 , int XE5) {
-		if(XE3==0 & XE4==1 & XE1!=0 & XE2!=0 & SinemaSayac!=0 & OperaSayac!=0 || XE3==1 & XE4==0  & XE1!=0 & XE2!=0 & XE2!=0 & SinemaSayac!=0 & OperaSayac!=0 ){
-			if(XE1>=XE2){
-				totalPrice-=(XE2*XE5);
-				System.out.println(XE2+" Adet Opera bileti alana "+XE2+" adet Sinema biletinde "+XE5+"$ indirim kampanyası uygulandı."); // X al X tanesinde XE5 kadar indirim (Opera->Sinema)
-				System.out.println("Yeni kampanyalı fiyat : "+totalPrice+"$");
-			}
-			if(XE2>=XE1){
-				totalPrice-=(XE1*XE5);
-				System.out.println(XE1+" Adet Sinema bileti alana "+XE1+" adet Opera biletinde "+XE5+"$ indirim kampanyası uygulandı."); //  X al X tanesinde XE5 kadar indirim (Sinema->Opera)
-				System.out.println("Yeni kampanyalı fiyat : "+totalPrice+"$");
+	public void kampanyaEkle3(int tur1Adet, int tur2Adet, int biletTuru1, int biletTuru2, int indirimTutari) {
+		if(biletTuru1==2 & biletTuru2==1) {
+			if (SinemaSayac!=0 & BungeeSayac!=0){
+				totalPrice-=(tur2Adet*indirimTutari);
+				System.out.println(tur1Adet+" adet Bungee Jumping bileti alana "+tur2Adet+" tane Sinema biletinde "+indirimTutari+"$ indirim kampanyası uygulandı.");
 			}
 		}
-		else if(XE3==1 & XE4==2 & XE1!=0 & XE2!=0 & BungeeSayac!=0 & SinemaSayac!=0 || XE3==2 & XE4==1  & XE1!=0 & XE2!=0 & BungeeSayac!=0 & SinemaSayac!=0 ){
-			if(XE1>=XE2){
-				totalPrice-=(XE2*XE5);
-				System.out.println(XE2+" Adet Sinema bileti alana "+XE2+" adet Bungee biletinde "+XE5+"$ indirim kampanyası uygulandı."); // X al X tane bedava (Sinema->Bungee)
-				System.out.println("Yeni kampanyalı fiyat : "+totalPrice+"$");
-			}
-			if(XE2>=XE1){
-				totalPrice-=(XE1*XE5);
-				System.out.println(XE1+" Adet Bungee bileti alana "+XE1+" adet Sinema biletinde "+XE5+"$ indirim kampanyası uygulandı."); // X al X tane bedava (Bungee->Sinema)
-				System.out.println("Yeni kampanyalı fiyat : "+totalPrice+"$");
+		else if(biletTuru1==1 & biletTuru2==2) {
+			if (SinemaSayac!=0 & BungeeSayac!=0){
+				totalPrice-=(tur2Adet*indirimTutari);
+				System.out.println(tur1Adet+" adet Sinema bileti alana "+tur2Adet+" tane Bungee biletinde "+indirimTutari+"$ indirim kampanyası uygulandı.");
 			}
 		}
-		else if(XE3==0 & XE4==2 & XE1!=0 & XE2!=0 & BungeeSayac!=0 & OperaSayac!=0 || XE3==2 & XE4==0  & XE1!=0 & XE2!=0 & XE2!=0 & BungeeSayac!=0 & OperaSayac!=0 ){
-			if(XE1>=XE2){
-				totalPrice-=(XE2*XE5);
-				System.out.println(XE2+" Adet Opera bileti alana "+XE2+" adet Bungee biletinde "+XE5+"$ indirim kampanyası uygulandı."); // X al X tane bedava (Opera->Bungee)
-				System.out.println("Yeni kampanyalı fiyat : "+totalPrice+"$");
-			}
-			if(XE2>=XE1){
-				totalPrice-=(XE1*XE5);
-				System.out.println(XE1+" Adet Bungee bileti alana "+XE1+" adet Opera biletinde "+XE5+"$ indirim kampanyası uygulandı."); // X al X tane bedava (Bungee->Opera)
-				System.out.println("Yeni kampanyalı fiyat : "+totalPrice+"$");
+		else if(biletTuru1==0 & biletTuru2==1) {
+			if (SinemaSayac!=0 & OperaSayac!=0){
+				totalPrice-=(tur2Adet*indirimTutari);
+				System.out.println(tur1Adet+" adet Opera bileti alana "+tur2Adet+" tane Sinema biletinde "+indirimTutari+"$ indirim kampanyası uygulandı.");
 			}
 		}
-		else{
-			System.out.println("Eklenen kampanya bulunamadı.(3)"); // Eklenmemiş ise console çıktısı
+		else if(biletTuru1==1 & biletTuru2==0) {
+			if (SinemaSayac!=0 & OperaSayac!=0){
+				totalPrice-=(tur2Adet*indirimTutari);
+				System.out.println(tur1Adet+" adet Sinema bileti alana "+tur2Adet+" tane Opera biletinde "+indirimTutari+"$ indirim kampanyası uygulandı.");
+			}
 		}
-		
-		
+		else if(biletTuru1==0 & biletTuru2==2) {
+			if (OperaSayac!=0 & BungeeSayac!=0){
+				totalPrice-=(tur2Adet*indirimTutari);
+				System.out.println(tur1Adet+" adet Opera bileti alana "+tur2Adet+" tane Bungee biletinde "+indirimTutari+"$ indirim kampanyası uygulandı.");
+			}
+		}
+		else if(biletTuru1==2 & biletTuru2==0) {
+			if (OperaSayac!=0 & BungeeSayac!=0){
+				totalPrice-=(tur2Adet*indirimTutari);
+				System.out.println(tur1Adet+" adet Bungee bileti alana "+tur2Adet+" tane Opera biletinde "+indirimTutari+"$ indirim kampanyası uygulandı.");
+			}
+		}
+		else {
+			System.out.println("Eklenen kampanya bulunamadı.(3)");
+		}
+		System.out.println("Yeni kampanyalı fiyat : "+totalPrice+"$");
 	}
 	
 	private enum Biletler { // Biletleri private enum olarak tanımladık.Hiçbir şekilde fiyatları ve isimleri değişmeyecek.
@@ -255,26 +259,15 @@ public static void main(String []args) {
 	case "202": //202 girilirse
 		biletlerim.add();
 		biletlerim.total();
-		biletlerim.kampanyaEkle1(0, 0, 0, 0);
+		biletlerim.kampanyaEkle1(0, 0, 0);
 		biletlerim.kampanyaEkle2(0, 0, 0, 0);
-		biletlerim.kampanyaEkle3(0, 0, 0, 0, 0);
+		biletlerim.kampanyaEkle3(2, 3, 1, 0, 100);
+		
 		break;
 		
 	default: // Hatalı giriş yapılırsa
 		System.out.println("Eksik veya hatalı bir giriş yaptınız.");
 		break;
-	}
-	
-	
-	/*
-	 * 
-	 *  XE1 = 1. Bilet türü adeti
-	 *  XE2 = 2. Bilet türü adeti(İndirim uygulanan)
-	 *  XE3 = 1. Bilet türü  (Oluşturulan ArrayListe göre 0 Opera 1 Sinema 2 BungeeJumping)
-	 *  XE4 = 2. Bilet türü  (Oluşturulan ArrayListe göre 0 Opera 1 Sinema 2 BungeeJumping)
-	 *  XE5 = İndirim tutarı
-	 *  
-	*/
-	
+		}
 	}
 }
